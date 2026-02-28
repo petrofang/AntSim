@@ -12,6 +12,7 @@ Binaries/
 DerivedDataCache/
 Intermediate/
 Saved/
+Backup/
 
 # Build and cache artifacts
 *.obj
