@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-# Copilot Instructions
-
-## Project context
-- This is an Unreal Engine 5 C++ project (`AntSim`).
-- Source code is under `Source/AntSim/`.
-- Ignore generated engine/project files under `Intermediate/`, `Binaries/`, `DerivedDataCache/`, and `Saved/`.
-
-## Coding guidelines
-- Prefer minimal, targeted changes.
-- Follow existing style in touched files.
-- Do not add new dependencies unless necessary.
-- Keep simulation updates deterministic where possible (fixed timestep patterns are preferred).
-
-## Unreal-specific expectations
-- Keep Unreal macros and class structure intact (`UCLASS`, `UFUNCTION`, `UPROPERTY`).
-- Avoid edits to generated project files (for example `Intermediate/ProjectFiles/*.vcxproj`).
-- When adding new classes, place headers/sources in `Source/AntSim/` and keep includes local-first.
-
-## Validation
-- Ensure the project still builds after changes.
-- Avoid unrelated refactors.
-=======
 # Copilot Instructions for Antenboro UE5
 
 ## Game Concept
@@ -33,7 +10,7 @@
 - **Undergrowth DNA**: David Attenborough-style narration, realistic ecosystem, reverence for nature
 - **Honey I Shrunk the Kids DNA**: Perspective — player controls a hero ant in a human-scale world (grass is trees, water is lakes)
 
-**Tech Stack**: Visual Studio 2022 + Unreal Engine 5.3.7
+**Tech Stack**: Visual Studio 2022 + Unreal Engine 5.7
 
 ---
 
@@ -216,4 +193,3 @@ AntSim/
 4. **Implement `Colony`** — Spawns ants, manages food, calls Tick
 5. **Wire up `SimManager`** — Calls Colony::Tick in fixed-timestep loop
 6. **Test in PIE** — Verify ants spawn and wander (no visuals yet)
->>>>>>> 770a410 (Update copilot instructions: remove individual ant survival, emphasize superorganism and undergrowth scale)
