@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Ant.h"
 #include "SimManager.generated.h"
 
 UCLASS()
@@ -22,5 +23,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	/** Simulated ants — position, velocity direction, and speed. */
+	TArray<FAnt> Ants;
+
+	/** Leftover real time that hasn't been consumed by fixed steps yet. */
+	float AccumulatedTime = 0.f;
+
+	/** Fixed simulation timestep (seconds). ~0.0333 = 30 Hz. */
+	static constexpr float FixedTimestep = 1.0f / 30.0f;
+
+	/** Advance the simulation by exactly one fixed step. */
+	void SimStep();
 
 };

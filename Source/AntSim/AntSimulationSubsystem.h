@@ -6,7 +6,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "AntSimulationSubsystem.generated.h"
 
-/** Simple ant data: position and velocity in world space. */
+/** Simple ant data: position, unit-direction velocity, and movement speed. */
 USTRUCT(BlueprintType)
 struct FAntData
 {
@@ -15,16 +15,21 @@ struct FAntData
 	UPROPERTY(BlueprintReadOnly)
 	FVector Position = FVector::ZeroVector;
 
+	/** Unit-direction vector indicating where the ant is heading. */
 	UPROPERTY(BlueprintReadOnly)
-	FVector Velocity = FVector(100.f, 0.f, 0.f);
+	FVector Velocity = FVector(1.f, 0.f, 0.f);
+
+	/** Movement speed in cm/s. Position advances by Velocity * Speed * dt each step. */
+	UPROPERTY(BlueprintReadOnly)
+	float Speed = 100.f;
 };
 
 /**
  * UAntSimulationSubsystem
  *
  * A UTickableWorldSubsystem that runs a fixed-timestep ant simulation.
- * Each ant has a position and velocity; every fixed tick the ants move
- * forward by Velocity * FixedTimestep.
+ * Each ant has a position, unit-direction velocity, and speed; every fixed tick
+ * the ants move forward by Velocity * Speed * FixedTimestep.
  *
  * Usage:
  *   UAntSimulationSubsystem* Sim = World->GetSubsystem<UAntSimulationSubsystem>();
@@ -50,14 +55,14 @@ public:
 	TArray<FVector> GetAntPositions() const;
 
 private:
-	/** Simulated ants — position + velocity. */
+	/** Simulated ants — position, velocity direction, and speed. */
 	TArray<FAntData> Ants;
 
 	/** Leftover real time that hasn't been consumed by fixed steps yet. */
 	float AccumulatedTime = 0.f;
 
-	/** Fixed simulation timestep (seconds). 0.05 = 20 Hz. */
-	static constexpr float FixedTimestep = 0.05f;
+	/** Fixed simulation timestep (seconds). ~0.0333 = 30 Hz. */
+	static constexpr float FixedTimestep = 1.0f / 30.0f;
 
 	/** Number of ants spawned at initialization. */
 	static constexpr int32 InitialAntCount = 20;
