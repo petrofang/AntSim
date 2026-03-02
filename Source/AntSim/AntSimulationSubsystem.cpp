@@ -22,9 +22,9 @@ void UAntSimulationSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 			Rand.FRandRange(-InitialSpawnExtent, InitialSpawnExtent),
 			Rand.FRandRange(-InitialSpawnExtent, InitialSpawnExtent),
 			0.f);
-		// Random direction in the XY plane at constant speed.
+		// Random unit-direction in the XY plane; speed is stored separately.
 		const float AngleRad = Rand.FRandRange(0.f, 2.f * PI);
-		Ant.Velocity = FVector(FMath::Cos(AngleRad), FMath::Sin(AngleRad), 0.f) * 100.f;
+		Ant.Velocity = FVector(FMath::Cos(AngleRad), FMath::Sin(AngleRad), 0.f);
 		Ants.Add(Ant);
 	}
 }
@@ -74,6 +74,6 @@ void UAntSimulationSubsystem::SimStep()
 {
 	for (FAntData& Ant : Ants)
 	{
-		Ant.Position += Ant.Velocity * FixedTimestep;
+		Ant.Position += Ant.Velocity * Ant.Speed * FixedTimestep;
 	}
 }
