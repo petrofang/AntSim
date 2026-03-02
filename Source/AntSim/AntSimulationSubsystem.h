@@ -60,10 +60,13 @@ private:
 	static constexpr float FixedTimestep = 0.05f;
 
 	/** Number of ants spawned at initialization. */
-	static constexpr int32 InitialAntCount = 10;
+	static constexpr int32 InitialAntCount = 20;
 
-	/** World-space distance between ant starting positions at initialization. */
-	static constexpr float InitialAntSpacing = 20.f;
+	/** Half-extent (cm) of the square region in which ants are randomly placed. */
+	static constexpr float InitialSpawnExtent = 500.f;
+
+	/** Seed for the random stream used during initialization (ensures determinism). */
+	static constexpr int32 InitialRandomSeed = 42;
 
 	/** Advance the simulation by exactly one fixed step. */
 	void SimStep();
