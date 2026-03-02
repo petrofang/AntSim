@@ -10,16 +10,20 @@ void UAntSimulationSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
-	// Seed the initial ant population with varied velocities so they spread out.
+	// Spawn 20 ants at random positions on the ground plane with random velocities.
+	// A fixed seed keeps initialization deterministic (same seed → same results).
+	FRandomStream Rand(InitialRandomSeed);
 	Ants.Reserve(InitialAntCount);
 	for (int32 i = 0; i < InitialAntCount; ++i)
 	{
 		FAntData Ant;
-		// Spread starting positions slightly so ants don't stack on top of each other.
-		Ant.Position = FVector(i * InitialAntSpacing, 0.f, 0.f);
-		// Give each ant a unique heading (evenly spaced around a circle).
-		const float AngleDeg = (360.f / InitialAntCount) * i;
-		const float AngleRad = FMath::DegreesToRadians(AngleDeg);
+		// Random position on the XY ground plane (Z = 0).
+		Ant.Position = FVector(
+			Rand.FRandRange(-InitialSpawnExtent, InitialSpawnExtent),
+			Rand.FRandRange(-InitialSpawnExtent, InitialSpawnExtent),
+			0.f);
+		// Random direction in the XY plane at constant speed.
+		const float AngleRad = Rand.FRandRange(0.f, 2.f * PI);
 		Ant.Velocity = FVector(FMath::Cos(AngleRad), FMath::Sin(AngleRad), 0.f) * 100.f;
 		Ants.Add(Ant);
 	}
